@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
+//import 'package:time_formatter/time_formatter.dart';
+
 void main() {
   runApp(
     MaterialApp(
@@ -19,7 +21,9 @@ class myApp extends StatefulWidget {
 
 class _myAppState extends State<myApp> {
   var temp,humidity,lat,lon,local,city;
-
+  //
+  // var date = DateTime.fromMillisecondsSinceEpoch(1000*1668730987);
+  // var formt = new DateFormat('HH:mm a').format(date);
   //location
 
   void locator()async{
@@ -38,6 +42,7 @@ class _myAppState extends State<myApp> {
     setState(() {
       temp=result['main']['temp'];
       local=result['name'];
+      humidity = result['main']['humidity'];
     });
   }
 
@@ -48,6 +53,8 @@ class _myAppState extends State<myApp> {
     var result=jsonDecode(res.body);
     setState(() {
       temp=result['main']['temp'];
+      humidity = result['main']['humidity'];
+
     });
   }
   void setCity(){
@@ -109,17 +116,28 @@ class _myAppState extends State<myApp> {
               Expanded(
                 child: Row(
                   children: [
-                    Text("latitude :"+lat.toString()
-
+                    Text("latitude :"+lat.toString(),
+                style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
                     ),
-                    SizedBox(width:90,),
-                    Text("longitude "+lon.toString()),
+                    SizedBox(width:10,),
+                    Text("longitude "+lon.toString(),
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),),
                   ],
                 ),
               ),
               Expanded(child: Row(
                 children: [
-                  Text("city name"+local.toString()),
+                  Text("city name    "+local.toString(),
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),),
                 ],
               )),
               Expanded(child: Row(
@@ -157,7 +175,11 @@ class _myAppState extends State<myApp> {
               )),
               Expanded(child: Row(
                 children: [
-                  Text("humidity ",style: TextStyle(
+                  Text("humidity  ",style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),),
+                  Text( humidity.toString(),style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),)
