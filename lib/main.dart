@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
-//import 'package:time_formatter/time_formatter.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 
 void main() {
   runApp(
@@ -20,7 +20,9 @@ class myApp extends StatefulWidget {
 }
 
 class _myAppState extends State<myApp> {
-  var temp,humidity,lat,lon,local,city;
+  List cityList=['naogaon','dhaka','bogra','rajshahi'];
+  String?selectedValue;
+  var temp,humidity,lat,lon,local,city,pressure,sunset,sunrise,visibility;
   //
   // var date = DateTime.fromMillisecondsSinceEpoch(1000*1668730987);
   // var formt = new DateFormat('HH:mm a').format(date);
@@ -30,8 +32,8 @@ class _myAppState extends State<myApp> {
     await Geolocator.requestPermission();
     Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     setState(() {
-      lat=position.latitude.toStringAsFixed(2);
-      lon=position.longitude.toStringAsFixed(2);
+      lat=position.latitude.toStringAsFixed(4);
+      lon=position.longitude.toStringAsFixed(4);
     });
   }
 
@@ -41,8 +43,12 @@ class _myAppState extends State<myApp> {
     var result=jsonDecode(res.body);
     setState(() {
       temp=result['main']['temp'];
-      local=result['name'];
+      city=result['name'];
       humidity = result['main']['humidity'];
+      pressure=result['main']['pressure'];
+      sunset=result['sys']['sunset'];
+      sunrise=result['sys']['sunrise'];
+      visibility=result['visibility'];
     });
   }
 
@@ -54,21 +60,29 @@ class _myAppState extends State<myApp> {
     setState(() {
       temp=result['main']['temp'];
       humidity = result['main']['humidity'];
+      lat=result['coord']['lat'];
+      lon= result['coord']['lon'];
+      pressure=result['main']['pressure'];
+      sunset=result['sys']['sunset'];
+      sunrise=result['sys']['sunrise'];
+      visibility=result['visibility'];
+      // temp=result['main']['temp'];
+      // humidity = result['main']['humidity'];
 
     });
   }
-  void setCity(){
-     setState((){
-       city=textEditingController.text;
-     });
-
-  }
+  // void setCity(){
+  //    setState((){
+  //      city=textEditingController.text;
+  //    });
+  //
+  // }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getWeather();
-    setCity();
+    //setCity();
     locator();
     getLocation();
   }
@@ -76,6 +90,12 @@ class _myAppState extends State<myApp> {
   Widget build(BuildContext context) {
     var dt=DateFormat("yyyy-MM-dd hh-mm a").format(DateTime.now());
     return Scaffold(
+      backgroundColor: Colors.cyanAccent,
+      appBar: AppBar(
+
+        title: Text("Weather App",),
+        backgroundColor: Colors.blue,
+      ),
       body:SafeArea(
         child: Container(
           padding:EdgeInsets.all(34),
@@ -87,14 +107,37 @@ class _myAppState extends State<myApp> {
                   children: [
                     SizedBox(
                       width:150,
-                      child: TextField(
-                        style: TextStyle(
-                          fontSize: 30,
+                      child: DropdownButton2(
+                        hint: Text(
+                          'Select Item',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Theme
+                                .of(context)
+                                .hintColor,
+                          ),
                         ),
-                        controller: textEditingController,
-                        decoration: InputDecoration(
-                          hintText: "city name",
-                        ),
+                        items: items
+                            .map((item) =>
+                            DropdownMenuItem<String>(
+                              value: item,
+                              child: Text(
+                                item,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ))
+                            .toList(),
+                        value: selectedValue,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedValue = value as String;
+                          });
+                        },
+                        buttonHeight: 40,
+                        buttonWidth: 140,
+                        itemHeight: 40,
                       ),
                     ),
                     MaterialButton(
@@ -123,7 +166,7 @@ class _myAppState extends State<myApp> {
               ),
                     ),
                     SizedBox(width:10,),
-                    Text("longitude "+lon.toString(),
+                    Text("long"+lon.toString(),
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -133,7 +176,7 @@ class _myAppState extends State<myApp> {
               ),
               Expanded(child: Row(
                 children: [
-                  Text("city name    "+local.toString(),
+                  Text("city name    "+city.toString(),
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -142,6 +185,7 @@ class _myAppState extends State<myApp> {
               )),
               Expanded(child: Row(
                 children: [
+                  SizedBox(width: 60,),
                   MaterialButton(
                       color: Colors.blue,
                       textColor: Colors.black87,
@@ -152,7 +196,7 @@ class _myAppState extends State<myApp> {
                         ),
                       ),
                       onPressed: (){
-                          setCity();
+                          // setCity();
                           getWeather();
                   })
                 ],
@@ -160,13 +204,19 @@ class _myAppState extends State<myApp> {
               Text(dt,style: TextStyle(fontSize: 20,),),
               Expanded(child: Row(
                 children: [
-                  Text("temp",
+                  Text("temp : ",
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),),
-                  SizedBox(width:100,),
-                  Text(temp.toString(),
+                  SizedBox(width:10,),
+                  Text(temp.toString() +" °C",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),),
+                  SizedBox(width:10,),
+                  Text(((temp*9+180)/5).toString() +" °F",
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -179,17 +229,85 @@ class _myAppState extends State<myApp> {
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),),
+                  SizedBox(width:100,),
                   Text( humidity.toString(),style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),)
                 ],
-              ))
+              )),
+              Expanded(child: Row(
+                children: [
+                  Text("pressure",style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),),
+                  SizedBox(width:100,),
+                  Text(pressure!=null?pressure.toString()+" mBar":"loading",style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),)
+                ],
+              )),
+              Expanded(child: Row(
+                children: [
+                  Text("visibility",style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),),
+                  SizedBox(width:100,),
+                  Text( visibility!=null?(visibility/1000).toString()+" km":"Loading",style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),)
+                ],
+              )),
+              Expanded(child: Row(
+                children: [
+                  Text("sunrise ",style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),),
+                  SizedBox(width:100,),
+                  Text( "sunset",style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),)
+                ],
+              )),
+              Expanded(child: Row(
+                children: [
+                  Image.network('https://rukminim1.flixcart.com/image/416/416/jzsqky80/poster/h/y/4/medium-nature-wall-poster-sunrise-poster-poster-high-resolution-original-imafjqjyasudq8sg.jpeg?q=70'),
+                  SizedBox(width:90,),
+                  Image.network('https://media.istockphoto.com/id/1172427455/photo/beautiful-sunset-over-the-tropical-sea.jpg?s=612x612&w=0&k=20&c=i3R3cbE94hdu6PRWT7cQBStY_wknVzl2pFCjQppzTBg='),
+                ],
+              )),
+              Expanded(child: Row(
+                children: [
+                  Text( sunrise!=null?formatted(sunrise):"loading",style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),),
+                  SizedBox(width:40,),
+
+                  Text(sunset!=null?formatted(sunset):"loading",style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),),
+
+                ],
+              )),
+
             ],
           ),
         ),
       )
     );
   }
+}
+
+String formatted(timeStamp) {
+  final DateTime date1 = DateTime.fromMillisecondsSinceEpoch(timeStamp * 1000);
+  return DateFormat('hh:mm:ss a').format(date1);
 }
 
