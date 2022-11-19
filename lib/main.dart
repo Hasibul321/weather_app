@@ -109,9 +109,9 @@ class _myAppState extends State<myApp> {
                       width:150,
                       child: DropdownButton2(
                         hint: Text(
-                          'Select Item',
+                          'Select city',
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 24,
                             color: Theme
                                 .of(context)
                                 .hintColor,
@@ -206,7 +206,7 @@ class _myAppState extends State<myApp> {
               Text(dt,style: TextStyle(fontSize: 20,),),
               Expanded(child: Row(
                 children: [
-                  Text("temp : ",
+                  Text("তাপমাত্রা : ",
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -218,7 +218,7 @@ class _myAppState extends State<myApp> {
                       fontWeight: FontWeight.bold,
                     ),),
                   SizedBox(width:10,),
-                  Text(((temp*9+180)/5).toStringAsFixed(2) +" °F",
+                  Text(temp!=null?((temp*9+180)/5).toStringAsFixed(2) +" °F":"loading",
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -227,7 +227,7 @@ class _myAppState extends State<myApp> {
               )),
               Expanded(child: Row(
                 children: [
-                  Text("আর্দ্রতা ",style: TextStyle(
+                  Text("আর্দ্রতা  ",style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),),
@@ -258,7 +258,7 @@ class _myAppState extends State<myApp> {
                     fontWeight: FontWeight.bold,
                   ),),
                   SizedBox(width:100,),
-                  Text( visibility!=null?(visibility/1000).toStringAsFixed(2) +" km":"Loading",style: TextStyle(
+                  Text( visibility!=null?(visibility/1000).toString()+" km":"Loading",style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),)
@@ -270,8 +270,8 @@ class _myAppState extends State<myApp> {
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),),
-                  SizedBox(width:100,),
-                  Text( "sunset",style: TextStyle(
+                  SizedBox(width:105,),
+                  Text( "সূর্যাস্ত",style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),)
