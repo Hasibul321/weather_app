@@ -117,14 +117,15 @@ class _myAppState extends State<myApp> {
                                 .hintColor,
                           ),
                         ),
-                        items: items
+                        items: cityList
                             .map((item) =>
                             DropdownMenuItem<String>(
                               value: item,
                               child: Text(
                                 item,
                                 style: const TextStyle(
-                                  fontSize: 14,
+                                  fontSize: 24,
+                                  color: Colors.deepPurple,
                                 ),
                               ),
                             ))
@@ -133,6 +134,7 @@ class _myAppState extends State<myApp> {
                         onChanged: (value) {
                           setState(() {
                             selectedValue = value as String;
+                            city=selectedValue;
                           });
                         },
                         buttonHeight: 40,
@@ -216,7 +218,7 @@ class _myAppState extends State<myApp> {
                       fontWeight: FontWeight.bold,
                     ),),
                   SizedBox(width:10,),
-                  Text(((temp*9+180)/5).toString() +" °F",
+                  Text(((temp*9+180)/5).toStringAsFixed(2) +" °F",
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
