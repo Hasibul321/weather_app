@@ -108,41 +108,48 @@ class _myAppState extends State<myApp> {
                   children: [
                     SizedBox(
                       width:150,
-                      child: DropdownButton2(
-                        hint: Text(
-                          'Select city',
-                          style: TextStyle(
-                            fontSize: 24,
-                            color: Theme
-                                .of(context)
-                                .hintColor,
+                      child: SizedBox(
+                        height:100,
+                        width:100,
+
+                        child: DropdownButton2(
+                          alignment: AlignmentDirectional.center,
+                          hint: Text(
+                            'Select city',
+                            style: TextStyle(
+                              fontSize: 24,
+                              color: Theme
+                                  .of(context)
+                                  .hintColor,
+                            ),
                           ),
-                        ),
-                        items: cityList
-                            .map((item) =>
-                            DropdownMenuItem<String>(
-                              value: item,
-                              child: Text(
-                                item,
-                                style: const TextStyle(
-                                  fontSize: 24,
-                                  color: Colors.deepPurple,
+                          items: cityList
+                              .map((item) =>
+                              DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(
+                                  item,
+                                  style: const TextStyle(
+                                    fontSize: 24,
+                                    color: Colors.deepPurple,
+                                  ),
                                 ),
-                              ),
-                            ))
-                            .toList(),
-                        value: selectedValue,
-                        onChanged: (value) {
-                          setState(() {
-                            selectedValue = value as String;
-                            city=selectedValue;
-                          });
-                        },
-                        buttonHeight: 40,
-                        buttonWidth: 140,
-                        itemHeight: 40,
+                              ))
+                              .toList(),
+                          value: selectedValue,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedValue = value as String;
+                              city=selectedValue;
+                            });
+                          },
+                          buttonHeight: 40,
+                          buttonWidth: 140,
+                          itemHeight: 40,
+                        ),
                       ),
                     ),
+                    SizedBox(width:20,),
                     MaterialButton(
                       color: Colors.blue,
                         textColor: Colors.black87,
