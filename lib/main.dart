@@ -149,7 +149,7 @@ class _myAppState extends State<myApp> {
                         ),
                       ),
                     ),
-
+                    SizedBox(width:10,),
                     ElevatedButton(
                       onPressed: () {
                         locator();
@@ -205,6 +205,7 @@ class _myAppState extends State<myApp> {
                 children: [
                   SizedBox(width: 60,),
                   MaterialButton(
+
                       color: Colors.blue,
                       textColor: Colors.black87,
                       child: Text("GetWeather",
