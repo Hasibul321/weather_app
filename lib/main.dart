@@ -91,8 +91,8 @@ class _myAppState extends State<myApp> {
     var dt=DateFormat("yyyy-MM-dd hh-mm a").format(DateTime.now());
     return Scaffold(
       backgroundColor: Colors.cyanAccent,
-      appBar: AppBar(
 
+      appBar: AppBar(
         title: Text("Weather App",),
         backgroundColor: Colors.blue,
       ),
@@ -161,14 +161,14 @@ class _myAppState extends State<myApp> {
               Expanded(
                 child: Row(
                   children: [
-                    Text("latitude :"+lat.toString(),
+                    Text("lat: "+lat.toString(),
                 style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
                     ),
                     SizedBox(width:10,),
-                    Text("long"+lon.toString(),
+                    Text("long : "+lon.toString(),
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -227,7 +227,7 @@ class _myAppState extends State<myApp> {
               )),
               Expanded(child: Row(
                 children: [
-                  Text("humidity  ",style: TextStyle(
+                  Text("আর্দ্রতা ",style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),),
@@ -240,7 +240,7 @@ class _myAppState extends State<myApp> {
               )),
               Expanded(child: Row(
                 children: [
-                  Text("pressure",style: TextStyle(
+                  Text("বায়ু চাপ",style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),),
@@ -253,12 +253,12 @@ class _myAppState extends State<myApp> {
               )),
               Expanded(child: Row(
                 children: [
-                  Text("visibility",style: TextStyle(
+                  Text("দৃষ্টিসীমা",style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),),
                   SizedBox(width:100,),
-                  Text( visibility!=null?(visibility/1000).toString()+" km":"Loading",style: TextStyle(
+                  Text( visibility!=null?(visibility/1000).toStringAsFixed(2) +" km":"Loading",style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),)
@@ -266,7 +266,7 @@ class _myAppState extends State<myApp> {
               )),
               Expanded(child: Row(
                 children: [
-                  Text("sunrise ",style: TextStyle(
+                  Text("সূর্যোদয় ",style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),),
