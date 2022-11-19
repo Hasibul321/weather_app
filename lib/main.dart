@@ -149,20 +149,28 @@ class _myAppState extends State<myApp> {
                         ),
                       ),
                     ),
-                    SizedBox(width:20,),
-                    MaterialButton(
-                      color: Colors.blue,
-                        textColor: Colors.black87,
-                        child: Text("location",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+
+                    ElevatedButton(
+                      onPressed: () {
+                        locator();
+                        getLocation();
+                      },
+                      child: Row(
+                        children: [
+                          Text("location",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        onPressed: (){
-                              locator();
-                              getLocation();
-                    }),
+
+                      Icon(
+                        Icons.add,
+                        size: 24.0,
+                      ),
+                      ]
+                      ),// <-- Text
+                    ),
                   ],
                 ),
               ),
