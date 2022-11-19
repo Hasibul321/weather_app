@@ -88,7 +88,7 @@ class _myAppState extends State<myApp> {
   }
   @override
   Widget build(BuildContext context) {
-    var dt=DateFormat("yyyy-MM-dd hh-mm a").format(DateTime.now());
+    var dt=DateFormat("dd MMMM , yy       hh-mm a").format(DateTime.now());
     return Scaffold(
       backgroundColor: Colors.cyanAccent,
 
@@ -96,6 +96,7 @@ class _myAppState extends State<myApp> {
         title: Text("Weather App",),
         backgroundColor: Colors.blue,
       ),
+
       body:SafeArea(
         child: Container(
           padding:EdgeInsets.all(34),
