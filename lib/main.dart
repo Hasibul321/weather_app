@@ -264,7 +264,7 @@ class _myAppState extends State<myApp> {
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),),
-                  SizedBox(width:10,),
+                  SizedBox(width:40,),
                   Text(temp!=null?((temp*9+180)/5).toStringAsFixed(2) +" °F":"loading",
                     style: TextStyle(
                       fontSize: 20,
